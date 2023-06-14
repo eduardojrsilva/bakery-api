@@ -1,0 +1,194 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Units {
+  id         String         @id @default(uuid())
+  address    String
+  suppliers  UnitSupplier[]
+  equipments Equipment[]
+  products   UnitProduct[]
+  employees  Employees[]
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@map("units")
+}
+
+model Suppliers {
+  id         String              @id @default(uuid())
+  cnpj       String              @unique
+  name       String
+  units      UnitSupplier[]
+  equipments SupplierEquipment[]
+  products   SupplierProduct[]
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@map("suppliers")
+}
+
+model UnitSupplier {
+  unitId     String
+  unit       Units     @relation(fields: [unitId], references: [id])
+  supplierId String
+  supplier   Suppliers @relation(fields: [supplierId], references: [id])
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@id([unitId, supplierId])
+}
+
+model Equipment {
+  id        String              @id @default(uuid())
+  name      String
+  price     Float
+  category  String
+  suppliers SupplierEquipment[]
+  unitId    String
+  unit      Units               @relation(fields: [unitId], references: [id])
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@map("equipment")
+}
+
+model SupplierEquipment {
+  supplierId   String
+  supplier     Suppliers @relation(fields: [supplierId], references: [id])
+  equipamentId String
+  equipament   Equipment @relation(fields: [equipamentId], references: [id])
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@id([supplierId, equipamentId])
+}
+
+model Products {
+  id        String            @id @default(uuid())
+  name      String
+  units     UnitProduct[]
+  suppliers SupplierProduct[]
+  sales     ProductSale[]
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@map("products")
+}
+
+model SupplierProduct {
+  supplierId String
+  supplier   Suppliers @relation(fields: [supplierId], references: [id])
+  productId  String
+  product    Products  @relation(fields: [productId], references: [id])
+  price      Float
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@id([supplierId, productId])
+}
+
+model UnitProduct {
+  unitId    String
+  unit      Units    @relation(fields: [unitId], references: [id])
+  productId String
+  product   Products @relation(fields: [productId], references: [id])
+  price     Float
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@id([unitId, productId])
+}
+
+model Employees {
+  id        String             @id @default(uuid())
+  name      String
+  unit      Units              @relation(fields: [unitsId], references: [id])
+  unitsId   String
+  positions EmployeePosition[]
+  sales     Sales[]
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@map("employees")
+}
+
+model Positions {
+  id        String             @id @default(uuid())
+  name      String
+  salary    String
+  employees EmployeePosition[]
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@map("positions")
+}
+
+model EmployeePosition {
+  employeeId String
+  employee   Employees @relation(fields: [employeeId], references: [id])
+  positionId String
+  position   Positions @relation(fields: [positionId], references: [id])
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@id([employeeId, positionId])
+}
+
+model Sales {
+  id         String        @id @default(uuid())
+  totalPrice Float
+  products   ProductSale[]
+  sellerId   String
+  seller     Employees     @relation(fields: [sellerId], references: [id])
+  customerId String
+  customer   Customers     @relation(fields: [customerId], references: [id])
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@map("sales")
+}
+
+model ProductSale {
+  productId String
+  product   Products @relation(fields: [productId], references: [id])
+  saleId    String
+  sale      Sales    @relation(fields: [saleId], references: [id])
+  amount    Int
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@id([productId, saleId])
+}
+
+model Customers {
+  id    String  @id @default(uuid())
+  name  String
+  sales Sales[]
+
+  createdAt  DateTime @default(now())
+  updateddAt DateTime @updatedAt
+
+  @@map("customers")
+}
