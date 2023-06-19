@@ -11,6 +11,7 @@ import employeesRouter from './employees.routes';
 
 import productSaleRouter from "./productSale.routes";
 import unitSupplierRouter from "./unitSupplier.routes";
+import supplierEquipmentRouter from "./supplierEquipment.routes";
 
 const routes = Router();
 
@@ -25,5 +26,6 @@ routes.use('/employees', employeesRouter);
 
 routes.use('/product_sale', productSaleRouter);
 routes.use('/unit_supplier', unitSupplierRouter);
+routes.use('/supplier_equipment', supplierEquipmentRouter);
 
 export default routes;
