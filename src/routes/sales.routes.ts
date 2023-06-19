@@ -7,18 +7,22 @@ const salesRouter = Router();
 // CREATE
 salesRouter.post('/', async (request, response) => {
   const registerBodySchema = z.object({
-    // totalPrice: z.number(),
+    sellerId: z.string(),
+    customerId: z.string(),
+    totalPrice: z.number(),
   });
 
-  // const { totalPrice } = registerBodySchema.parse(request.body);
+  const { sellerId, customerId, totalPrice } = registerBodySchema.parse(request.body);
 
-  // const sale = await prisma.sales.create({
-  //   data: {
-  //     totalPrice,
-  //   }
-  // });
+  const sale = await prisma.sales.create({
+    data: {
+      sellerId,
+      customerId,
+      totalPrice,
+    }
+  });
 
-  // return response.status(201).send(sale);
+  return response.status(201).send(sale);
 });
 
 // READ
@@ -46,17 +50,21 @@ salesRouter.get('/:id', async (request, response) => {
 salesRouter.put('/', async (request, response) => {
   const registerBodySchema = z.object({
     id: z.string(),
-    // totalPrice: z.string().optional(),
+    sellerId: z.string().optional(),
+    customerId: z.string().optional(),
+    totalPrice: z.number().optional(),
   });
 
-  const { id } = registerBodySchema.parse(request.body);
+  const { id, sellerId, customerId, totalPrice } = registerBodySchema.parse(request.body);
 
   const sale = await prisma.sales.update({
     where: {
       id,
     },
     data: {
-      // totalPrice,
+      sellerId,
+      customerId,
+      totalPrice,
     }
   });
 
