@@ -5,7 +5,7 @@ import { prisma } from '../database/prismaClient';
 const employeesRouter = Router();
 
 // CREATE
-employeesRouter.post('/', async (request, reply) => {
+employeesRouter.post('/', async (request, response) => {
   const registerBodySchema = z.object({
     name: z.string(),
     unitsId: z.string(),
@@ -20,19 +20,19 @@ employeesRouter.post('/', async (request, reply) => {
     }
   });
 
-  return reply.status(201).send(employee);
+  return response.status(201).send(employee);
 });
 
 //READ
 // -- List All
-employeesRouter.get('/', async (_request, reply) => {
+employeesRouter.get('/', async (_request, response) => {
   const employees = await prisma.employees.findMany();
 
-  return reply.status(200).send(employees);
+  return response.status(200).send(employees);
 });
 
 // -- Find By Id
-employeesRouter.get('/:id', async (request, reply) => {
+employeesRouter.get('/:id', async (request, response) => {
   const { id } = request.params;
 
   const employee = await prisma.employees.findUnique({
@@ -41,11 +41,11 @@ employeesRouter.get('/:id', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(employee);
+  return response.status(200).send(employee);
 });
 
 // UPDATE
-employeesRouter.put('/', async (request, reply) => {
+employeesRouter.put('/', async (request, response) => {
   const registerBodySchema = z.object({
     id: z.string(),
     name: z.string(),
@@ -62,11 +62,11 @@ employeesRouter.put('/', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(employee);
+  return response.status(200).send(employee);
 });
 
 // DELETE
-employeesRouter.delete('/:id', async (request, reply) => {
+employeesRouter.delete('/:id', async (request, response) => {
   const { id } = request.params;
 
   const employee = await prisma.employees.delete({
@@ -75,7 +75,7 @@ employeesRouter.delete('/:id', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(employee);
+  return response.status(200).send(employee);
 });
 
 export default employeesRouter;

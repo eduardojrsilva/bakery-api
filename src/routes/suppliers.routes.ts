@@ -5,7 +5,7 @@ import { prisma } from '../database/prismaClient';
 const suppliersRouter = Router();
 
 // CREATE
-suppliersRouter.post('/', async (request, reply) => {
+suppliersRouter.post('/', async (request, response) => {
   const registerBodySchema = z.object({
     name: z.string(),
     cnpj: z.string(),
@@ -20,18 +20,18 @@ suppliersRouter.post('/', async (request, reply) => {
     }
   });
 
-  return reply.status(201).send(supplier);
+  return response.status(201).send(supplier);
 });
 
 // -- List All
-suppliersRouter.get('/', async (_request, reply) => {
+suppliersRouter.get('/', async (_request, response) => {
   const suppliers = await prisma.suppliers.findMany();
 
-  return reply.status(200).send(suppliers);
+  return response.status(200).send(suppliers);
 });
 
 // -- Find By Id
-suppliersRouter.get('/:id', async (request, reply) => {
+suppliersRouter.get('/:id', async (request, response) => {
   const { id } = request.params;
 
   const supplier = await prisma.suppliers.findUnique({
@@ -40,11 +40,11 @@ suppliersRouter.get('/:id', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(supplier);
+  return response.status(200).send(supplier);
 });
 
 // UPDATE
-suppliersRouter.put('/', async (request, reply) => {
+suppliersRouter.put('/', async (request, response) => {
   const registerBodySchema = z.object({
     id: z.string(),
     name: z.string().optional(),
@@ -63,11 +63,11 @@ suppliersRouter.put('/', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(supplier);
+  return response.status(200).send(supplier);
 });
 
 // DELETE
-suppliersRouter.delete('/:id', async (request, reply) => {
+suppliersRouter.delete('/:id', async (request, response) => {
   const { id } = request.params;
 
   const supplier = await prisma.suppliers.delete({
@@ -76,7 +76,7 @@ suppliersRouter.delete('/:id', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(supplier);
+  return response.status(200).send(supplier);
 });
 
 export default suppliersRouter;

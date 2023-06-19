@@ -5,7 +5,7 @@ import { prisma } from '../database/prismaClient';
 const equipmentRouter = Router();
 
 // CREATE
-equipmentRouter.post('/', async (request, reply) => {
+equipmentRouter.post('/', async (request, response) => {
   const registerBodySchema = z.object({
     name: z.string(),
     price: z.number(),
@@ -24,18 +24,18 @@ equipmentRouter.post('/', async (request, reply) => {
     }
   });
 
-  return reply.status(201).send(equipment);
+  return response.status(201).send(equipment);
 });
 
 // -- List All
-equipmentRouter.get('/', async (_request, reply) => {
+equipmentRouter.get('/', async (_request, response) => {
   const equipment = await prisma.equipment.findMany();
 
-  return reply.status(200).send(equipment);
+  return response.status(200).send(equipment);
 });
 
 // -- Find By Id
-equipmentRouter.get('/:id', async (request, reply) => {
+equipmentRouter.get('/:id', async (request, response) => {
   const { id } = request.params;
 
   const equipment = await prisma.equipment.findUnique({
@@ -44,11 +44,11 @@ equipmentRouter.get('/:id', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(equipment);
+  return response.status(200).send(equipment);
 });
 
 // UPDATE
-equipmentRouter.put('/', async (request, reply) => {
+equipmentRouter.put('/', async (request, response) => {
   const registerBodySchema = z.object({
     id: z.string(),
     name: z.string(),
@@ -69,11 +69,11 @@ equipmentRouter.put('/', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(equipment);
+  return response.status(200).send(equipment);
 });
 
 // DELETE
-equipmentRouter.delete('/:id', async (request, reply) => {
+equipmentRouter.delete('/:id', async (request, response) => {
   const { id } = request.params;
 
   const equipment = await prisma.equipment.delete({
@@ -82,7 +82,7 @@ equipmentRouter.delete('/:id', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(equipment);
+  return response.status(200).send(equipment);
 });
 
 export default equipmentRouter;
