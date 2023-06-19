@@ -13,6 +13,7 @@ import productSaleRouter from "./productSale.routes";
 import unitSupplierRouter from "./unitSupplier.routes";
 import supplierEquipmentRouter from "./supplierEquipment.routes";
 import supplierProductRouter from "./supplierProduct.routes";
+import unitProductRouter from "./unitProduct.routes";
 
 const routes = Router();
 
@@ -29,5 +30,6 @@ routes.use('/product_sale', productSaleRouter);
 routes.use('/unit_supplier', unitSupplierRouter);
 routes.use('/supplier_equipment', supplierEquipmentRouter);
 routes.use('/supplier_product', supplierProductRouter);
+routes.use('/unit_product', unitProductRouter);
 
 export default routes;
