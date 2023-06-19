@@ -21,8 +21,9 @@ productsRouter.post('/', async (request, reply) => {
   return reply.status(201).send(product);
 });
 
+//READ
 // -- List All
-productsRouter.get('/', async (request, reply) => {
+productsRouter.get('/', async (_request, reply) => {
   const products = await prisma.products.findMany();
 
   return reply.status(200).send(products);
