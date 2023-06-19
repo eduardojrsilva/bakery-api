@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { z } from 'zod';
+import { date, z } from 'zod';
 import { prisma } from '../database/prismaClient';
 
 const unitsRouter = Router();
 
 // CREATE
-unitsRouter.post('/', async (request, reply) => {
+unitsRouter.post('/', async (request, response) => {
   const registerBodySchema = z.object({
     address: z.string(),
   });
@@ -18,31 +18,44 @@ unitsRouter.post('/', async (request, reply) => {
     }
   });
 
-  return reply.status(201).send(unit);
+  return response.status(201).send(unit);
 });
 
 // -- List All
-unitsRouter.get('/', async (_request, reply) => {
-  const units = await prisma.units.findMany();
+unitsRouter.get('/', async (_request, response) => {
+  const units = await prisma.units.findMany({
+    include: {
+      suppliers: true,
+      equipments: true,
+      products: true,
+      employees: true,
+    },
+  });
 
-  return reply.status(200).send(units);
+  return response.status(200).send(units);
 });
 
 // -- Find By Id
-unitsRouter.get('/:id', async (request, reply) => {
+unitsRouter.get('/:id', async (request, response) => {
   const { id } = request.params;
 
   const unit = await prisma.units.findUnique({
     where: {
       id,
-    }
+    },
+    include: {
+      suppliers: true,
+      equipments: true,
+      products: true,
+      employees: true,
+    },
   });
 
-  return reply.status(200).send(unit);
+  return response.status(200).send(unit);
 });
 
 // UPDATE
-unitsRouter.put('/', async (request, reply) => {
+unitsRouter.put('/', async (request, response) => {
   const registerBodySchema = z.object({
     id: z.string(),
     address: z.string().optional(),
@@ -59,11 +72,11 @@ unitsRouter.put('/', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(unit);
+  return response.status(200).send(unit);
 });
 
 // DELETE
-unitsRouter.delete('/:id', async (request, reply) => {
+unitsRouter.delete('/:id', async (request, response) => {
   const { id } = request.params;
 
   const unit = await prisma.units.delete({
@@ -72,7 +85,7 @@ unitsRouter.delete('/:id', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(unit);
+  return response.status(200).send(unit);
 });
 
 export default unitsRouter;
