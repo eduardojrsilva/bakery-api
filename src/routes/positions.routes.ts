@@ -26,7 +26,11 @@ positionsRouter.post('/', async (request, response) => {
 // READ
 // -- List All
 positionsRouter.get('/', async (_request, response) => {
-  const positions = await prisma.positions.findMany();
+  const positions = await prisma.positions.findMany({
+    include: {
+      employees: true,
+    }
+  });
 
   return response.status(200).send(positions);
 });
@@ -38,6 +42,9 @@ positionsRouter.get('/:id', async (request, response) => {
   const position = await prisma.positions.findUnique({
     where: {
       id,
+    },
+    include: {
+      employees: true,
     }
   });
 

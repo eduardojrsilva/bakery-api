@@ -28,7 +28,13 @@ salesRouter.post('/', async (request, response) => {
 // READ
 // -- List All
 salesRouter.get('/', async (_request, response) => {
-  const sales = await prisma.sales.findMany();
+  const sales = await prisma.sales.findMany({
+    include: {
+      products: true,
+      seller: true,
+      customer: true,
+    }
+  });
 
   return response.status(200).send(sales);
 });
@@ -40,6 +46,11 @@ salesRouter.get('/:id', async (request, response) => {
   const sale = await prisma.sales.findUnique({
     where: {
       id,
+    },
+    include: {
+      products: true,
+      seller: true,
+      customer: true,
     }
   });
 

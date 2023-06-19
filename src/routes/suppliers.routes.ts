@@ -25,7 +25,13 @@ suppliersRouter.post('/', async (request, response) => {
 
 // -- List All
 suppliersRouter.get('/', async (_request, response) => {
-  const suppliers = await prisma.suppliers.findMany();
+  const suppliers = await prisma.suppliers.findMany({
+    include: {
+      units: true,
+      equipments: true,
+      products: true,
+    }
+  });
 
   return response.status(200).send(suppliers);
 });
@@ -37,6 +43,11 @@ suppliersRouter.get('/:id', async (request, response) => {
   const supplier = await prisma.suppliers.findUnique({
     where: {
       id,
+    },
+    include: {
+      units: true,
+      equipments: true,
+      products: true,
     }
   });
 

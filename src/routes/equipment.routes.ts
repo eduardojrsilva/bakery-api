@@ -29,7 +29,12 @@ equipmentRouter.post('/', async (request, response) => {
 
 // -- List All
 equipmentRouter.get('/', async (_request, response) => {
-  const equipment = await prisma.equipment.findMany();
+  const equipment = await prisma.equipment.findMany({
+    include: {
+      suppliers: true,
+      unit: true,
+    }
+  });
 
   return response.status(200).send(equipment);
 });
@@ -41,6 +46,10 @@ equipmentRouter.get('/:id', async (request, response) => {
   const equipment = await prisma.equipment.findUnique({
     where: {
       id,
+    },
+    include: {
+      suppliers: true,
+      unit: true,
     }
   });
 

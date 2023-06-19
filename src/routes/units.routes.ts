@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { z } from 'zod';
+import { date, z } from 'zod';
 import { prisma } from '../database/prismaClient';
 
 const unitsRouter = Router();
@@ -23,7 +23,14 @@ unitsRouter.post('/', async (request, response) => {
 
 // -- List All
 unitsRouter.get('/', async (_request, response) => {
-  const units = await prisma.units.findMany();
+  const units = await prisma.units.findMany({
+    include: {
+      suppliers: true,
+      equipments: true,
+      products: true,
+      employees: true,
+    },
+  });
 
   return response.status(200).send(units);
 });
@@ -35,7 +42,13 @@ unitsRouter.get('/:id', async (request, response) => {
   const unit = await prisma.units.findUnique({
     where: {
       id,
-    }
+    },
+    include: {
+      suppliers: true,
+      equipments: true,
+      products: true,
+      employees: true,
+    },
   });
 
   return response.status(200).send(unit);

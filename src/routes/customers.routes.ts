@@ -24,7 +24,11 @@ customersRouter.post('/', async (request, response) => {
 // READ
 // -- List All
 customersRouter.get('/', async (_request, response) => {
-  const customers = await prisma.customers.findMany();
+  const customers = await prisma.customers.findMany({
+    include: {
+     sales: true,
+    }
+  });
 
   return response.status(200).send(customers);
 });
@@ -36,6 +40,9 @@ customersRouter.get('/:id', async (request, response) => {
   const customer = await prisma.customers.findUnique({
     where: {
       id,
+    },
+    include: {
+      sales: true,
     }
   });
 
