@@ -51,9 +51,9 @@ equipmentRouter.get('/:id', async (request, reply) => {
 equipmentRouter.put('/', async (request, reply) => {
   const registerBodySchema = z.object({
     id: z.string(),
-    name: z.string(),
-    price: z.number(),
-    category: z.string(),
+    name: z.string().optional(),
+    price: z.number().optional(),
+    category: z.string().optional(),
   });
 
   const { id, name, price, category } = registerBodySchema.parse(request.body);
