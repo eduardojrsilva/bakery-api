@@ -5,7 +5,7 @@ import { prisma } from '../database/prismaClient';
 const productsRouter = Router();
 
 // CREATE
-productsRouter.post('/', async (request, reply) => {
+productsRouter.post('/', async (request, response) => {
   const registerBodySchema = z.object({
     name: z.string(),
   });
@@ -18,19 +18,19 @@ productsRouter.post('/', async (request, reply) => {
     }
   });
 
-  return reply.status(201).send(product);
+  return response.status(201).send(product);
 });
 
 // READ
 // -- List All
-productsRouter.get('/', async (request, reply) => {
+productsRouter.get('/', async (_request, response) => {
   const products = await prisma.products.findMany();
 
-  return reply.status(200).send(products);
+  return response.status(200).send(products);
 });
 
 // -- Find By Id
-productsRouter.get('/:id', async (request, reply) => {
+productsRouter.get('/:id', async (request, response) => {
   const { id } = request.params;
 
   const product = await prisma.products.findUnique({
@@ -39,14 +39,14 @@ productsRouter.get('/:id', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(product);
+  return response.status(200).send(product);
 });
 
 // UPDATE
-productsRouter.put('/', async (request, reply) => {
+productsRouter.put('/', async (request, response) => {
   const registerBodySchema = z.object({
     id: z.string(),
-    name: z.string(),
+    name: z.string().optional(),
   });
 
   const { id, name } = registerBodySchema.parse(request.body);
@@ -60,11 +60,11 @@ productsRouter.put('/', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(product);
+  return response.status(200).send(product);
 });
 
 // DELETE
-productsRouter.delete('/:id', async (request, reply) => {
+productsRouter.delete('/:id', async (request, response) => {
   const { id } = request.params;
 
   const product = await prisma.products.delete({
@@ -73,7 +73,7 @@ productsRouter.delete('/:id', async (request, reply) => {
     }
   });
 
-  return reply.status(200).send(product);
+  return response.status(200).send(product);
 });
 
 export default productsRouter;
