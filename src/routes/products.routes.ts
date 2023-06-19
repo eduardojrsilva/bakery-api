@@ -75,24 +75,4 @@ productsRouter.delete('/:id', async (request, reply) => {
   return reply.status(200).send(product);
 });
 
-//FIND ALL
-productsRouter.get('/', async (_, reply) => {
-  const products = await prisma.products.findMany();
-
-  return reply.status(201).send(JSON.stringify(products));
-})
-
-//FIND BY ID
-productsRouter.get('/:id', async (request, reply) => {
-  const { id } = request.params;
-
-  const product = await prisma.products.findUnique({
-    where: {
-      id,
-    }
-  });
-
-  return reply.status(200).send(product);
-});
-
 export default productsRouter;
