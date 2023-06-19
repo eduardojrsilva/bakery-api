@@ -2,10 +2,10 @@ import { Router } from 'express';
 import { z } from 'zod';
 import { prisma } from '../database/prismaClient';
 
-const equipmentsRouter = Router();
+const equipmentRouter = Router();
 
 // CREATE
-equipmentsRouter.post('/', async (request, reply) => {
+equipmentRouter.post('/', async (request, reply) => {
   const registerBodySchema = z.object({
     name: z.string(),
     price: z.number(),
@@ -28,14 +28,14 @@ equipmentsRouter.post('/', async (request, reply) => {
 });
 
 // -- List All
-equipmentsRouter.get('/', async (_request, reply) => {
+equipmentRouter.get('/', async (_request, reply) => {
   const equipment = await prisma.equipment.findMany();
 
   return reply.status(200).send(equipment);
 });
 
 // -- Find By Id
-equipmentsRouter.get('/:id', async (request, reply) => {
+equipmentRouter.get('/:id', async (request, reply) => {
   const { id } = request.params;
 
   const equipment = await prisma.equipment.findUnique({
@@ -48,7 +48,7 @@ equipmentsRouter.get('/:id', async (request, reply) => {
 });
 
 // UPDATE
-equipmentsRouter.put('/', async (request, reply) => {
+equipmentRouter.put('/', async (request, reply) => {
   const registerBodySchema = z.object({
     id: z.string(),
     name: z.string(),
@@ -73,7 +73,7 @@ equipmentsRouter.put('/', async (request, reply) => {
 });
 
 // DELETE
-equipmentsRouter.delete('/:id', async (request, reply) => {
+equipmentRouter.delete('/:id', async (request, reply) => {
   const { id } = request.params;
 
   const equipment = await prisma.equipment.delete({
@@ -85,4 +85,4 @@ equipmentsRouter.delete('/:id', async (request, reply) => {
   return reply.status(200).send(equipment);
 });
 
-export default equipmentsRouter;
+export default equipmentRouter;
