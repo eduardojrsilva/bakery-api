@@ -9,14 +9,16 @@ employeePosition.post('/', async (request, response) => {
   const registerBodySchema = z.object({
     employeeId: z.string(),
     positionId: z.string(),
+    salary: z.number(),
   });
 
-  const { employeeId, positionId } = registerBodySchema.parse(request.body);
+  const { employeeId, positionId, salary } = registerBodySchema.parse(request.body);
 
   const employeePosition = await prisma.employeePosition.create({
     data: {
       employeeId,
       positionId,
+      salary,
     }
   });
 

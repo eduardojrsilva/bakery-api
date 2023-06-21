@@ -8,15 +8,13 @@ const positionsRouter = Router();
 positionsRouter.post('/', async (request, response) => {
   const registerBodySchema = z.object({
     name: z.string(),
-    salary: z.string(),
   });
 
-  const { name, salary } = registerBodySchema.parse(request.body);
+  const { name } = registerBodySchema.parse(request.body);
 
   const position = await prisma.positions.create({
     data: {
       name,
-      salary,
     }
   });
 
@@ -67,7 +65,6 @@ positionsRouter.put('/', async (request, response) => {
     },
     data: {
       name,
-      salary,
     }
   });
 

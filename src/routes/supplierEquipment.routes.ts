@@ -8,15 +8,15 @@ const supplierEquipmentRouter = Router();
 supplierEquipmentRouter.post('/', async (request, response) => {
   const registerBodySchema = z.object({
     supplierId: z.string(),
-    equipamentId: z.string(),
+    equipmentId: z.string(),
   });
 
-  const { supplierId, equipamentId } = registerBodySchema.parse(request.body);
+  const { supplierId, equipmentId } = registerBodySchema.parse(request.body);
 
   const supplierEquipment = await prisma.supplierEquipment.create({
     data: {
       supplierId,
-      equipamentId,
+      equipmentId,
     }
   });
 
@@ -29,7 +29,7 @@ supplierEquipmentRouter.get('/', async (_request, response) => {
   const supplierEquipment = await prisma.supplierEquipment.findMany({
     include: {
       supplier: true,
-      equipament: true,
+      equipment: true,
     }
   });
 
