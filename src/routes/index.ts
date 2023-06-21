@@ -1,20 +1,22 @@
 import { Router } from "express";
 
-import productsRouter from './products.routes'
-import positionsRouter from './positions.routes'
-import salesRouter from "./sales.routes";
-import customersRouter from "./customers.routes";
-import unitsRouter from './units.routes';
-import suppliersRouter from './suppliers.routes';
-import equipmentRouter from './equipment.routes';
-import employeesRouter from './employees.routes';
+import productsRouter from './CRUD/products.routes'
+import positionsRouter from './CRUD/positions.routes'
+import salesRouter from "./CRUD/sales.routes";
+import customersRouter from "./CRUD/customers.routes";
+import unitsRouter from './CRUD/units.routes';
+import suppliersRouter from './CRUD/suppliers.routes';
+import equipmentRouter from './CRUD/equipment.routes';
+import employeesRouter from './CRUD/employees.routes';
 
-import productSaleRouter from "./productSale.routes";
-import unitSupplierRouter from "./unitSupplier.routes";
-import supplierEquipmentRouter from "./supplierEquipment.routes";
-import supplierProductRouter from "./supplierProduct.routes";
-import unitProductRouter from "./unitProduct.routes";
-import employeePosition from "./employeePosition.routes";
+import productSaleRouter from "./CRUD/productSale.routes";
+import unitSupplierRouter from "./CRUD/unitSupplier.routes";
+import supplierEquipmentRouter from "./CRUD/supplierEquipment.routes";
+import supplierProductRouter from "./CRUD/supplierProduct.routes";
+import unitProductRouter from "./CRUD/unitProduct.routes";
+import employeePosition from "./CRUD/employeePosition.routes";
+
+import finishSaleRouter from "./finishSale.routes";
 
 const routes = Router();
 
@@ -33,5 +35,7 @@ routes.use('/supplier_equipment', supplierEquipmentRouter);
 routes.use('/supplier_product', supplierProductRouter);
 routes.use('/unit_product', unitProductRouter);
 routes.use('/employee_position', employeePosition);
+
+routes.use('/finish_sale', finishSaleRouter);
 
 export default routes;

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { z } from 'zod';
-import { prisma } from '../database/prismaClient';
+import { prisma } from '../../database/prismaClient';
 
 const supplierProductRouter = Router();
 

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { date, z } from 'zod';
-import { prisma } from '../database/prismaClient';
+import { z } from 'zod';
+import { prisma } from '../../database/prismaClient';
 
 const unitsRouter = Router();
 
