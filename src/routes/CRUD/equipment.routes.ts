@@ -10,17 +10,15 @@ equipmentRouter.post('/', async (request, response) => {
     name: z.string(),
     price: z.number(),
     category: z.string(),
-    unitId: z.string(),
   });
 
-  const { name, price, category, unitId } = registerBodySchema.parse(request.body);
+  const { name, price, category } = registerBodySchema.parse(request.body);
 
   const equipment = await prisma.equipment.create({
     data: {
       name,
       price,
       category,
-      unitId
     }
   });
 

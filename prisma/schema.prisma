@@ -56,8 +56,8 @@ model Equipment {
   price     Float
   category  String
   suppliers SupplierEquipment[]
-  unitId    String
-  unit      Units               @relation(fields: [unitId], references: [id])
+  unitId    String?
+  unit      Units?               @relation(fields: [unitId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
