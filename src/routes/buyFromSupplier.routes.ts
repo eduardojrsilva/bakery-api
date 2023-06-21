@@ -13,7 +13,10 @@ buyFromSupplierRouter.post('/', async (request, response) => {
       amount: z.number(),
       resalePrice: z.number(),
     }).array().optional(),
-    equipments: z.string().array().optional(),
+    equipments: z.object({
+      equipmentId: z.string(),
+      amount: z.number(),
+    }).array().optional(),
   });
 
   const { unitId, supplierId, products, equipments } = registerBodySchema.parse(request.body);
@@ -32,8 +35,6 @@ buyFromSupplierRouter.post('/', async (request, response) => {
         productId: { in: productsIds }
       }
     });
-
-    console.log(productsInfo)
   
     const pricesById: Record<string, number> = productsInfo.reduce((acc, { productId, price }) => {
       return {
@@ -52,21 +53,25 @@ buyFromSupplierRouter.post('/', async (request, response) => {
   }
 
   if (equipments) {
+    const equipmentsIds = equipments.map(({ equipmentId }) => equipmentId);
+
     const equipmentsInfo = await prisma.equipment.findMany({
       where: {
-        id: { in: equipments }
+        id: { in: equipmentsIds }
       }
     });
 
-    equipmentsTotalPrice = equipmentsInfo.reduce((acc, { price }) => acc + price, 0);
+    const pricesById: Record<string, number> = equipmentsInfo.reduce((acc, { id, price }) => {
+      return {
+        ...acc,
+        [id]: price,
+      };
+    }, {});
 
-    await prisma.equipment.updateMany({
-      where: {
-        id: { in: equipments }
-      },
-      data: {
-        unitId,
-      }
+    equipmentsTotalPrice = equipments.reduce((acc, { equipmentId, amount }) => acc + pricesById[equipmentId] * amount, 0);
+
+    await prisma.unitEquipment.createMany({
+      data: equipments.map(({ equipmentId }) => ({ equipmentId, unitId }))
     });
   }
 

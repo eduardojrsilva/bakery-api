@@ -11,12 +11,12 @@ datasource db {
 }
 
 model Units {
-  id         String         @id @default(uuid())
+  id         String          @id @default(uuid())
   address    String
   suppliers  UnitSupplier[]
-  equipments Equipment[]
   products   UnitProduct[]
   employees  Employees[]
+  equipments UnitEquipment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -56,8 +56,7 @@ model Equipment {
   price     Float
   category  String
   suppliers SupplierEquipment[]
-  unitId    String?
-  unit      Units?               @relation(fields: [unitId], references: [id])
+  units     UnitEquipment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -75,6 +74,18 @@ model SupplierEquipment {
   updatedAt DateTime @updatedAt
 
   @@id([supplierId, equipmentId])
+}
+
+model UnitEquipment {
+  unitId      String
+  unit        Units     @relation(fields: [unitId], references: [id])
+  equipmentId String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([unitId, equipmentId])
 }
 
 model Products {

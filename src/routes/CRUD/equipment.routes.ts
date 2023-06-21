@@ -30,7 +30,7 @@ equipmentRouter.get('/', async (_request, response) => {
   const equipment = await prisma.equipment.findMany({
     include: {
       suppliers: true,
-      unit: true,
+      units: true,
     }
   });
 
@@ -47,7 +47,7 @@ equipmentRouter.get('/:id', async (request, response) => {
     },
     include: {
       suppliers: true,
-      unit: true,
+      units: true,
     }
   });
 

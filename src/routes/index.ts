@@ -15,6 +15,7 @@ import supplierEquipmentRouter from "./CRUD/supplierEquipment.routes";
 import supplierProductRouter from "./CRUD/supplierProduct.routes";
 import unitProductRouter from "./CRUD/unitProduct.routes";
 import employeePosition from "./CRUD/employeePosition.routes";
+import unitEquipmentRouter from "./CRUD/unitEquipment.routes";
 
 import finishSaleRouter from "./finishSale.routes";
 import buyFromSupplierRouter from "./buyFromSupplier.routes";
@@ -38,6 +39,7 @@ routes.use('/supplier_equipment', supplierEquipmentRouter);
 routes.use('/supplier_product', supplierProductRouter);
 routes.use('/unit_product', unitProductRouter);
 routes.use('/employee_position', employeePosition);
+routes.use('/unit_equipment', unitEquipmentRouter);
 
 routes.use('/finish_sale', finishSaleRouter);
 routes.use('/buy_from_supplier', buyFromSupplierRouter);
