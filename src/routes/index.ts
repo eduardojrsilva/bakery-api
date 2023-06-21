@@ -18,6 +18,7 @@ import employeePosition from "./CRUD/employeePosition.routes";
 
 import finishSaleRouter from "./finishSale.routes";
 import buyFromSupplierRouter from "./buyFromSupplier.routes";
+import topSellingProductsRouter from "./getTopSellingProducts.routes";
 
 const routes = Router();
 
@@ -39,5 +40,6 @@ routes.use('/employee_position', employeePosition);
 
 routes.use('/finish_sale', finishSaleRouter);
 routes.use('/buy_from_supplier', buyFromSupplierRouter);
+routes.use('/top_selling_products', topSellingProductsRouter);
 
 export default routes;
