@@ -18,8 +18,8 @@ model Units {
   products   UnitProduct[]
   employees  Employees[]
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("units")
 }
@@ -32,8 +32,8 @@ model Suppliers {
   equipments SupplierEquipment[]
   products   SupplierProduct[]
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("suppliers")
 }
@@ -44,8 +44,8 @@ model UnitSupplier {
   supplierId String
   supplier   Suppliers @relation(fields: [supplierId], references: [id])
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@id([unitId, supplierId])
 }
@@ -59,22 +59,22 @@ model Equipment {
   unitId    String
   unit      Units               @relation(fields: [unitId], references: [id])
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("equipment")
 }
 
 model SupplierEquipment {
-  supplierId   String
-  supplier     Suppliers @relation(fields: [supplierId], references: [id])
-  equipamentId String
-  equipament   Equipment @relation(fields: [equipamentId], references: [id])
+  supplierId  String
+  supplier    Suppliers @relation(fields: [supplierId], references: [id])
+  equipmentId String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id])
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@id([supplierId, equipamentId])
+  @@id([supplierId, equipmentId])
 }
 
 model Products {
@@ -84,8 +84,8 @@ model Products {
   suppliers SupplierProduct[]
   sales     ProductSale[]
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("products")
 }
@@ -97,8 +97,8 @@ model SupplierProduct {
   product    Products  @relation(fields: [productId], references: [id])
   price      Float
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@id([supplierId, productId])
 }
@@ -110,8 +110,8 @@ model UnitProduct {
   product   Products @relation(fields: [productId], references: [id])
   price     Float
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@id([unitId, productId])
 }
@@ -124,8 +124,8 @@ model Employees {
   positions EmployeePosition[]
   sales     Sales[]
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("employees")
 }
@@ -133,11 +133,10 @@ model Employees {
 model Positions {
   id        String             @id @default(uuid())
   name      String
-  salary    String
   employees EmployeePosition[]
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("positions")
 }
@@ -147,9 +146,10 @@ model EmployeePosition {
   employee   Employees @relation(fields: [employeeId], references: [id])
   positionId String
   position   Positions @relation(fields: [positionId], references: [id])
+  salary     Float
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@id([employeeId, positionId])
 }
@@ -163,8 +163,8 @@ model Sales {
   customerId String
   customer   Customers     @relation(fields: [customerId], references: [id])
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("sales")
 }
@@ -176,8 +176,8 @@ model ProductSale {
   sale      Sales    @relation(fields: [saleId], references: [id])
   amount    Int
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@id([productId, saleId])
 }
@@ -187,8 +187,8 @@ model Customers {
   name  String
   sales Sales[]
 
-  createdAt  DateTime @default(now())
-  updateddAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("customers")
 }
