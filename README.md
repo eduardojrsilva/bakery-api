@@ -6,7 +6,7 @@
 ## Starting database container
   `docker start bakery_database`
 
-#
+---
 
 # Routes
 
@@ -58,4 +58,34 @@
  * Update
  * Delete
 
- #
+ ## UnitSupplier
+ * Create
+ * Read
+
+ ## UnitProduct
+ * Create
+ * Read
+
+ ## UnitEquipment
+ * Create
+ * Read
+
+ ## SupplierEquipment
+ * Create
+ * Read
+
+ ## SupplierProduct
+ * Create
+ * Read
+
+ ## EmployeePosition
+ * Create
+ * Read
+
+ ## Bakery
+* Hire employee
+* Top selling products
+* Buy from supplier
+* Finish sale
+
+---
